@@ -1,0 +1,194 @@
+﻿@model Contabilidad.ViewModel.HelperViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutPDF.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-1">
+        Factura:
+    </div>
+    <div class="col-xs-3">
+        @Model.tipoDeComprobante
+    </div>
+    <div class="col-xs-4">
+        Serie del Certificado del emisor:
+    </div>
+    <div class="col-xs-3">
+        @Model.serieEmisor
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-1">
+        Serie:
+    </div>
+    <div class="col-xs-3">
+        @Model.serie
+    </div>
+    <div class="col-xs-4">
+        Folio Fiscal:
+    </div>
+    <div class="col-xs-4">
+        <small>@Model.folioFiscal</small>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-1">
+        Folio:
+    </div>
+    <div class="col-xs-3">
+        @Model.folio
+    </div>
+    <div class="col-xs-4">
+        No. de serie del Certificado del SAT:
+    </div>
+    <div class="col-xs-3">
+        @Model.noCertificadoSAT
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-1">
+        Fecha:
+    </div>
+    <div class="col-xs-3">
+        @Model.fecha
+    </div>
+    <div class="col-xs-4">
+        Fecha y hora de certificación:
+    </div>
+    <div class="col-xs-3">
+        @Model.fechaHoraCertificacion
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-1">
+        Hora:
+    </div>
+    <div class="col-xs-3">
+        @Model.hora
+    </div>
+</div>
+<br />
+<hr />
+
+<div class="row">
+    <div class="col-xs-1">Emisor:</div>
+    <div class="col-xs-11">@Model.nombreEmisor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">RFC:</div>
+    <div class="col-xs-11">@Model.rfcEmisor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">Régimen:</div>
+    <div class="col-xs-11">@Model.RegimenFiscal</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">Domicilio:</div>
+    <div class="col-xs-7">@Model.calleEmisor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">Municipio:</div>
+    <div class="col-xs-3">@Model.municipioEmisor</div>
+    <div class="col-xs-1">Colonia:</div>
+    <div class="col-xs-3">@Model.coloniaEmisor</div>
+    <div class="col-xs-1">Ciudad:</div>
+    <div class="col-xs-3">@Model.localidadEmisor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">Estado:</div>
+    <div class="col-xs-3">@Model.estadoEmisor</div>
+    <div class="col-xs-1">Pais:</div>
+    <div class="col-xs-3">@Model.paisEmisor</div>
+    <div class="col-xs-1">CP:</div>
+    <div class="col-xs-3">@Model.cpEmisor</div>
+</div>
+<br />
+<div class="row">
+    <div class="col-xs-1">Receptor:</div>
+    <div class="col-xs-11">@Model.nombreReceptor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">RFC:</div>
+    <div class="col-xs-11">@Model.rfcReceptor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">Domicilio:</div>
+    <div class="col-xs-7">@Model.calleReceptor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">Municipio:</div>
+    <div class="col-xs-3">@Model.municipioReceptor</div>
+    <div class="col-xs-1">Colonia:</div>
+    <div class="col-xs-3">@Model.coloniaReceptor</div>
+    <div class="col-xs-1">Ciudad:</div>
+    <div class="col-xs-3">@Model.localidadReceptor</div>
+</div>
+<div class="row">
+    <div class="col-xs-1">Estado:</div>
+    <div class="col-xs-3">@Model.estadoReceptor</div>
+    <div class="col-xs-1">Pais:</div>
+    <div class="col-xs-3">@Model.paisReceptor</div>
+    <div class="col-xs-1">CP:</div>
+    <div class="col-xs-3">@Model.cpReceptor</div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                Cantidad
+            </td>
+            <td>
+                Unidad
+            </td>
+            <td>
+                Drescipción
+            </td>
+            <td>
+                Valor Unitario
+            </td>
+            <td>
+                Importe
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var item = 0; item < Model.cantidad.Count;item++ )
+        {
+            <tr>
+                <td>@Model.cantidad[item]</td>
+                <td>@Model.unidad[item]</td>
+                <td>@Model.descripcion[item]</td>
+                <td>@Model.valorUnitario[item]</td>
+                <td>@Model.importe[item]</td>
+            </tr>            
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-xs-8"></div>
+    <div class="col-xs-4">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Subtotal:</td>
+                    <td class="text-right">@Model.subtotal</td>
+                </tr>
+                <tr>
+                    <td>Descuentos:</td>
+                    <td class="text-right">@Model.descuentos</td>
+                </tr>
+                <tr>
+                    <td>I.V.A.:</td>
+                    <td class="text-right">@Model.iva</td>
+                </tr>
+                <tr>
+                    <td>Total:</td>
+                    <td class="text-right"><b>@Model.total</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

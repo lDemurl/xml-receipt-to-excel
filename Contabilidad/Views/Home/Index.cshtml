@@ -1,0 +1,11 @@
+﻿<div class="jumbotron">
+@using (Html.BeginForm("Exportexcel", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <!--input class="form-control" type="file" name="xml" accept="text/xml" multiple-->
+    <input class="form-control" type="file" name="xml" accept="text/xml" multiple>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+}
+</div>
