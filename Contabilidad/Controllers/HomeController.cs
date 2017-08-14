@@ -215,85 +215,91 @@ namespace Contabilidad.Controllers
                         cell21.DataType = CellValues.Number;
                     }
                 }
-                if (document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Traslados")) != null)
+                if (document2.Root.Element((XName)(namespace2 + "Impuestos")) != null)
                 {
-                    rowIndex++;
-                    Cell cell22 = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
-                    cell22.CellValue = new CellValue("Impuestos Trasladados");
-                    cell22.DataType = CellValues.String;
-                    cell22.StyleIndex = 1;
-                    Cell cell23 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
-                    cell23.CellValue = new CellValue("Impuesto");
-                    cell23.DataType = CellValues.String;
-                    cell23.StyleIndex = 1;
-                    Cell cell24 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
-                    cell24.CellValue = new CellValue("Tasa");
-                    cell24.DataType = CellValues.String;
-                    cell24.StyleIndex = 1;
-                    Cell cell25 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
-                    cell25.CellValue = new CellValue("Importe");
-                    cell25.DataType = CellValues.String;
-                    cell25.StyleIndex = 1;
-                    foreach (XElement element2 in document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Traslados")).Descendants())
+
+                    if (document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Traslados")) != null)
                     {
+
                         rowIndex++;
-                        Cell cell26 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                        Cell cell22 = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
+                        cell22.CellValue = new CellValue("Impuestos Trasladados");
+                        cell22.DataType = CellValues.String;
+                        cell22.StyleIndex = 1;
+                        Cell cell23 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                        cell23.CellValue = new CellValue("Impuesto");
+                        cell23.DataType = CellValues.String;
+                        cell23.StyleIndex = 1;
+                        Cell cell24 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                        cell24.CellValue = new CellValue("Tasa");
+                        cell24.DataType = CellValues.String;
+                        cell24.StyleIndex = 1;
+                        Cell cell25 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                        cell25.CellValue = new CellValue("Importe");
+                        cell25.DataType = CellValues.String;
+                        cell25.StyleIndex = 1;
+                        foreach (XElement element2 in document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Traslados")).Descendants())
+                        {
+                            rowIndex++;
+                            Cell cell26 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
 
-                        var impuesto = element2.Attribute("impuesto") != null
-                            ? element2.Attribute("impuesto").Value
-                            : element2.Attribute("Impuesto").Value;
+                            var impuesto = element2.Attribute("impuesto") != null
+                                ? element2.Attribute("impuesto").Value
+                                : element2.Attribute("Impuesto").Value;
 
-                        cell26.CellValue = new CellValue(impuesto);
-                        cell26.DataType = CellValues.String;
-                        Cell cell27 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                            cell26.CellValue = new CellValue(impuesto);
+                            cell26.DataType = CellValues.String;
+                            Cell cell27 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
 
-                        var tasa = element2.Attribute("tasa") != null
-                            ? element2.Attribute("tasa").Value
-                            : element2.Attribute("TasaOCuota").Value;
+                            var tasa = element2.Attribute("tasa") != null
+                                ? element2.Attribute("tasa").Value
+                                : element2.Attribute("TasaOCuota").Value;
 
-                        cell27.CellValue = new CellValue();
-                        cell27.DataType = CellValues.Number;
-                        Cell cell28 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                            cell27.CellValue = new CellValue();
+                            cell27.DataType = CellValues.Number;
+                            Cell cell28 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
 
-                        var importe = element2.Attribute("importe") != null
-                            ? element2.Attribute("importe").Value
-                            : element2.Attribute("Importe").Value;
+                            var importe = element2.Attribute("importe") != null
+                                ? element2.Attribute("importe").Value
+                                : element2.Attribute("Importe").Value;
 
-                        cell28.CellValue = new CellValue(importe);
-                        cell28.DataType = CellValues.Number;
+                            cell28.CellValue = new CellValue(importe);
+                            cell28.DataType = CellValues.Number;
+                        }
                     }
-                }
-                if (document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Retenciones")) != null)
-                {
-                    rowIndex++;
-                    Cell cell29 = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
-                    cell29.CellValue = new CellValue("Impuestos Retenciones");
-                    cell29.DataType = CellValues.String;
-                    cell29.StyleIndex = 1;
-                    Cell cell30 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
-                    cell30.CellValue = new CellValue("Impuesto");
-                    cell30.DataType = CellValues.String;
-                    cell30.StyleIndex = 1;
-                    Cell cell31 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
-                    cell31.CellValue = new CellValue("Tasa");
-                    cell31.DataType = CellValues.String;
-                    cell31.StyleIndex = 1;
-                    Cell cell32 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
-                    cell32.CellValue = new CellValue("Importe");
-                    cell32.DataType = CellValues.String;
-                    cell32.StyleIndex = 1;
-                    foreach (XElement element3 in document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Retenciones")).Descendants())
+
+                    if (document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Retenciones")) != null)
                     {
                         rowIndex++;
-                        Cell cell33 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
-                        cell33.CellValue = new CellValue(element3.Attribute("impuesto").Value);
-                        cell33.DataType = CellValues.String;
-                        Cell cell34 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
-                        cell34.CellValue = new CellValue((element3.Attribute("tasa") != null) ? element3.Attribute("tasa").Value : "");
-                        cell34.DataType = CellValues.Number;
-                        Cell cell35 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
-                        cell35.CellValue = new CellValue(element3.Attribute("importe").Value);
-                        cell35.DataType = CellValues.Number;
+                        Cell cell29 = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
+                        cell29.CellValue = new CellValue("Impuestos Retenciones");
+                        cell29.DataType = CellValues.String;
+                        cell29.StyleIndex = 1;
+                        Cell cell30 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                        cell30.CellValue = new CellValue("Impuesto");
+                        cell30.DataType = CellValues.String;
+                        cell30.StyleIndex = 1;
+                        Cell cell31 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                        cell31.CellValue = new CellValue("Tasa");
+                        cell31.DataType = CellValues.String;
+                        cell31.StyleIndex = 1;
+                        Cell cell32 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                        cell32.CellValue = new CellValue("Importe");
+                        cell32.DataType = CellValues.String;
+                        cell32.StyleIndex = 1;
+                        foreach (XElement element3 in document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Retenciones")).Descendants())
+                        {
+                            rowIndex++;
+                            Cell cell33 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                            cell33.CellValue = new CellValue(element3.Attribute("impuesto").Value);
+                            cell33.DataType = CellValues.String;
+                            Cell cell34 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                            cell34.CellValue = new CellValue((element3.Attribute("tasa") != null) ? element3.Attribute("tasa").Value : "");
+                            cell34.DataType = CellValues.Number;
+                            Cell cell35 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                            cell35.CellValue = new CellValue(element3.Attribute("importe").Value);
+                            cell35.DataType = CellValues.Number;
+                        }
                     }
                 }
 
@@ -333,21 +339,24 @@ namespace Contabilidad.Controllers
 
                 }
 
-                rowIndex++;
-                Cell cell36 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
-                cell36.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos").Value : "");
-                cell36.DataType = CellValues.Number;
-                Cell cell37 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
-                cell37.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados").Value : "");
-                cell37.DataType = CellValues.Number;
-                Cell cell38 = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
+                if ((document2.Root.Element((XName)(namespace2 + "Impuestos")) != null))
+                {
+                    rowIndex++;
+                    Cell cell36 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                    cell36.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos").Value : "");
+                    cell36.DataType = CellValues.Number;
+                    Cell cell37 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                    cell37.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados").Value : "");
+                    cell37.DataType = CellValues.Number;
+                    Cell cell38 = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
+                    cell38.CellValue = new CellValue();
+                    cell38.DataType = CellValues.Number;
+                }
 
                 var total = document2.Root.Attribute("total") != null
                     ? document2.Root.Attribute("total").Value
                     : document2.Root.Attribute("Total").Value;
 
-                cell38.CellValue = new CellValue();
-                cell38.DataType = CellValues.Number;
                 rowIndex++;
             }
             document.WorkbookPart.WorksheetParts.First<WorksheetPart>().Worksheet.Save();
