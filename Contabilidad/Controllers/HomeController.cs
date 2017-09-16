@@ -162,6 +162,28 @@ namespace Contabilidad.Controllers
                 CellDomicilioReceptor.CellValue = new CellValue(DomicilioReceptor);
                 CellDomicilioReceptor.DataType = CellValues.String;
 
+                if ((document2.Root.Element((XName)(namespace2 + "Impuestos")) != null))
+                {
+                    //rowIndex++;
+                    Cell cell36 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                    cell36.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos").Value : "");
+                    cell36.DataType = CellValues.Number;
+                    Cell cell37 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                    cell37.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados").Value : "");
+                    cell37.DataType = CellValues.Number;
+                    Cell cell38 = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
+                    cell38.CellValue = new CellValue();
+                    cell38.DataType = CellValues.Number;
+                }
+
+                var total = document2.Root.Attribute("total") != null
+                    ? document2.Root.Attribute("total").Value
+                    : document2.Root.Attribute("Total").Value;
+
+                Cell totalcell = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
+                totalcell.CellValue = new CellValue(total);
+                totalcell.DataType = CellValues.Number;
+
 
                 Cell cell9 = InsertCellInWorksheet("J", rowIndex, sheetData, worksheet);
                 cell9.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("nombre") != null) ? document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("nombre").Value : "");
@@ -215,6 +237,7 @@ namespace Contabilidad.Controllers
                         cell21.DataType = CellValues.Number;
                     }
                 }
+
                 if (document2.Root.Element((XName)(namespace2 + "Impuestos")) != null)
                 {
 
@@ -338,24 +361,6 @@ namespace Contabilidad.Controllers
                     }
 
                 }
-
-                if ((document2.Root.Element((XName)(namespace2 + "Impuestos")) != null))
-                {
-                    rowIndex++;
-                    Cell cell36 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
-                    cell36.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos").Value : "");
-                    cell36.DataType = CellValues.Number;
-                    Cell cell37 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
-                    cell37.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados").Value : "");
-                    cell37.DataType = CellValues.Number;
-                    Cell cell38 = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
-                    cell38.CellValue = new CellValue();
-                    cell38.DataType = CellValues.Number;
-                }
-
-                var total = document2.Root.Attribute("total") != null
-                    ? document2.Root.Attribute("total").Value
-                    : document2.Root.Attribute("Total").Value;
 
                 rowIndex++;
             }
