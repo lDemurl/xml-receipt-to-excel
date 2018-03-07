@@ -73,26 +73,25 @@ namespace Contabilidad.Controllers
                 XNamespace namespace2 = document2.Root.Name.Namespace;
                 XNamespace namespace3 = "http://www.sat.gob.mx/TimbreFiscalDigital";
                 XNamespace namespace4 = "http://www.sat.gob.mx/implocal";
-                DateTime time = DateTime.Parse(document2.Root.Attribute("fecha") != null ? document2.Root.Attribute("fecha").Value : document2.Root.Attribute("Fecha").Value);
+                 
+                DateTime time = DateTime.Parse(GetString(document2.Root.Attribute("Fecha")));
 
                 Cell cell2 = InsertCellInWorksheet("A", rowIndex, sheetData, worksheet);
                 cell2.CellValue = new CellValue($"{time:G}");
                 cell2.DataType = CellValues.String;
 
                 Cell cell3 = InsertCellInWorksheet("B", rowIndex, sheetData, worksheet);
-                cell3.CellValue = new CellValue((document2.Root.Attribute("serie") != null) ? document2.Root.Attribute("serie").Value : "");
+                cell3.CellValue = new CellValue(GetString(document2.Root.Attribute("Serie")));
                 cell3.DataType = CellValues.String;
                 Cell cell4 = InsertCellInWorksheet("C", rowIndex, sheetData, worksheet);
-                cell4.CellValue = new CellValue((document2.Root.Attribute("folio") != null) ? document2.Root.Attribute("folio").Value : "");
+                cell4.CellValue = new CellValue(GetString(document2.Root.Attribute("Folio")));
                 cell4.DataType = CellValues.Number;
                 Cell cell5 = InsertCellInWorksheet("D", rowIndex, sheetData, worksheet);
                 cell5.CellValue = new CellValue(document2.Root.Element((XName)(namespace2 + "Complemento")).Element((XName)(namespace3 + "TimbreFiscalDigital")).Attribute("UUID").Value);
                 cell5.DataType = CellValues.String;
                 Cell cell6 = InsertCellInWorksheet("E", rowIndex, sheetData, worksheet);
 
-                var rfc_emisor = document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("rfc") != null
-                    ? document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("rfc").Value
-                    : document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("Rfc").Value;
+                var rfc_emisor = GetString(document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("Rfc"));
 
                 cell6.CellValue = new CellValue(rfc_emisor);
                 cell6.DataType = CellValues.String;
@@ -103,14 +102,15 @@ namespace Contabilidad.Controllers
                 var currentDomicilioEmisor = (document2.Root.Element((XName)(namespace2 + "Emisor")).Element((XName)(namespace2 + "DomicilioFiscal")));
                 if (currentDomicilioEmisor != null)
                 {
-                    var calleEmisor = currentDomicilioEmisor.Attribute("calle") != null ? currentDomicilioEmisor.Attribute("calle").Value : string.Empty;
-                    var noExteriorEmisor = currentDomicilioEmisor.Attribute("noExterior") != null ? currentDomicilioEmisor.Attribute("noExterior").Value : string.Empty;
-                    var noInteriorEmisor = currentDomicilioEmisor.Attribute("noInterior") != null ? currentDomicilioEmisor.Attribute("noInterior").Value : string.Empty;
-                    var coloniaEmisor = currentDomicilioEmisor.Attribute("colonia") != null ? currentDomicilioEmisor.Attribute("colonia").Value : string.Empty;
-                    var municipioEmisor = currentDomicilioEmisor.Attribute("municipio") != null ? currentDomicilioEmisor.Attribute("municipio").Value : string.Empty;
-                    var estadoEmisor = currentDomicilioEmisor.Attribute("estado") != null ? currentDomicilioEmisor.Attribute("estado").Value : string.Empty;
-                    var paisEmisor = currentDomicilioEmisor.Attribute("pais") != null ? currentDomicilioEmisor.Attribute("pais").Value : string.Empty;
-                    var codigoPostalEmisor = currentDomicilioEmisor.Attribute("codigoPostal") != null ? currentDomicilioEmisor.Attribute("codigoPostal").Value : string.Empty;
+                    var calleEmisor = GetString(currentDomicilioEmisor.Attribute("Calle"));
+                    var noExteriorEmisor = GetString(currentDomicilioEmisor.Attribute("NoExterior"));
+                    var noInteriorEmisor = GetString(currentDomicilioEmisor.Attribute("NoInterior"));
+                    var coloniaEmisor = GetString(currentDomicilioEmisor.Attribute("Colonia"));
+                    var municipioEmisor = GetString(currentDomicilioEmisor.Attribute("Municipio"));
+                    var estadoEmisor = GetString(currentDomicilioEmisor.Attribute("Estado"));
+                    var paisEmisor = GetString(currentDomicilioEmisor.Attribute("Pais"));
+                    var codigoPostalEmisor = GetString(currentDomicilioEmisor.Attribute("CodigoPostal"));
+
                     DomicilioEmisor = calleEmisor + (string.IsNullOrEmpty(noExteriorEmisor) ? string.Empty : ", No. Ext: " + noExteriorEmisor)
                                                     + (string.IsNullOrEmpty(noInteriorEmisor) ? string.Empty : ", No. Int: " + noInteriorEmisor)
                                                     + (string.IsNullOrEmpty(coloniaEmisor) ? string.Empty : ", " + coloniaEmisor)
@@ -125,13 +125,11 @@ namespace Contabilidad.Controllers
                 CellDomicilioEmisor.DataType = CellValues.String;
 
                 Cell cell7 = InsertCellInWorksheet("G", rowIndex, sheetData, worksheet);
-                cell7.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("nombre") != null) ? document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("nombre").Value : "");
+                cell7.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("Nombre")));
                 cell7.DataType = CellValues.String;
                 Cell cell8 = InsertCellInWorksheet("H", rowIndex, sheetData, worksheet);
 
-                var rfc_receptor = document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("rfc") != null
-                    ? document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("rfc").Value
-                    : document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("Rfc").Value;
+                var rfc_receptor = GetString(document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("Rfc"));
 
                 cell8.CellValue = new CellValue(rfc_receptor);
                 cell8.DataType = CellValues.String;
@@ -140,14 +138,15 @@ namespace Contabilidad.Controllers
                 var currentDomicilioReceptor = (document2.Root.Element((XName)(namespace2 + "Receptor")).Element((XName)(namespace2 + "Domicilio")));
                 if (currentDomicilioReceptor != null)
                 {
-                    var calle = currentDomicilioReceptor.Attribute("calle") != null ? currentDomicilioReceptor.Attribute("calle").Value : string.Empty;
-                    var noExterior = currentDomicilioReceptor.Attribute("noExterior") != null ? currentDomicilioReceptor.Attribute("noExterior").Value : string.Empty;
-                    var noInterior = currentDomicilioReceptor.Attribute("noInterior") != null ? currentDomicilioReceptor.Attribute("noInterior").Value : string.Empty;
-                    var colonia = currentDomicilioReceptor.Attribute("colonia") != null ? currentDomicilioReceptor.Attribute("colonia").Value : string.Empty;
-                    var municipio = currentDomicilioReceptor.Attribute("municipio") != null ? currentDomicilioReceptor.Attribute("municipio").Value : string.Empty;
-                    var estado = currentDomicilioReceptor.Attribute("estado") != null ? currentDomicilioReceptor.Attribute("estado").Value : string.Empty;
-                    var pais = currentDomicilioReceptor.Attribute("pais") != null ? currentDomicilioReceptor.Attribute("pais").Value : string.Empty;
-                    var codigoPostal = currentDomicilioReceptor.Attribute("codigoPostal") != null ? currentDomicilioReceptor.Attribute("codigoPostal").Value : string.Empty;
+                    var calle = GetString(currentDomicilioReceptor.Attribute("Calle"));
+                    var noExterior = GetString(currentDomicilioReceptor.Attribute("NoExterior"));
+                    var noInterior = GetString(currentDomicilioReceptor.Attribute("NoInterior"));
+                    var colonia = GetString(currentDomicilioReceptor.Attribute("Colonia"));
+                    var municipio = GetString(currentDomicilioReceptor.Attribute("Municipio"));
+                    var estado = GetString(currentDomicilioReceptor.Attribute("Estado"));
+                    var pais = GetString(currentDomicilioReceptor.Attribute("Pais"));
+                    var codigoPostal = GetString(currentDomicilioReceptor.Attribute("CodigoPostal"));
+
                     DomicilioReceptor = calle + (string.IsNullOrEmpty(noExterior) ? string.Empty : ", No. Ext: " + noExterior)
                                                     + (string.IsNullOrEmpty(noInterior) ? string.Empty : ", No. Int: " + noInterior)
                                                     + (string.IsNullOrEmpty(colonia) ? string.Empty : ", " + colonia)
@@ -166,19 +165,17 @@ namespace Contabilidad.Controllers
                 {
                     //rowIndex++;
                     Cell cell36 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
-                    cell36.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosRetenidos").Value : "");
+                    cell36.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("TotalImpuestosRetenidos")));
                     cell36.DataType = CellValues.Number;
                     Cell cell37 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
-                    cell37.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados") != null) ? document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("totalImpuestosTrasladados").Value : "");
+                    cell37.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("TotalImpuestosTrasladados")));
                     cell37.DataType = CellValues.Number;
                     Cell cell38 = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
                     cell38.CellValue = new CellValue();
                     cell38.DataType = CellValues.Number;
                 }
 
-                var total = document2.Root.Attribute("total") != null
-                    ? document2.Root.Attribute("total").Value
-                    : document2.Root.Attribute("Total").Value;
+                var total = GetString(document2.Root.Attribute("Total"));
 
                 Cell totalcell = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
                 totalcell.CellValue = new CellValue(total);
@@ -186,7 +183,7 @@ namespace Contabilidad.Controllers
 
 
                 Cell cell9 = InsertCellInWorksheet("J", rowIndex, sheetData, worksheet);
-                cell9.CellValue = new CellValue((document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("nombre") != null) ? document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("nombre").Value : "");
+                cell9.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("Nombre")));
                 cell9.DataType = CellValues.String;
                 Cell cell10 = InsertCellInWorksheet("K", rowIndex, sheetData, worksheet);
                 cell10.CellValue = new CellValue("Cantidad");
@@ -212,28 +209,30 @@ namespace Contabilidad.Controllers
                 cell15.CellValue = new CellValue("Importe");
                 cell15.DataType = CellValues.String;
                 cell15.StyleIndex = 1;
+
                 foreach (XElement element in document2.Root.Element((XName)(namespace2 + "Conceptos")).Descendants())
                 {
-                    if (element.Attribute("cantidad") != null)
+
+                    if (!IsAttributeNull(element.Attribute("Cantidad")))
                     {
                         rowIndex++;
                         Cell cell16 = InsertCellInWorksheet("K", rowIndex, sheetData, worksheet);
-                        cell16.CellValue = new CellValue((element.Attribute("cantidad") != null) ? element.Attribute("cantidad").Value : "");
+                        cell16.CellValue = new CellValue(GetString(element.Attribute("Cantidad")));
                         cell16.DataType = CellValues.Number;
                         Cell cell17 = InsertCellInWorksheet("L", rowIndex, sheetData, worksheet);
-                        cell17.CellValue = new CellValue((element.Attribute("unidad") != null) ? element.Attribute("unidad").Value : "");
+                        cell17.CellValue = new CellValue(GetString(element.Attribute("Unidad")));
                         cell17.DataType = CellValues.String;
                         Cell cell18 = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
-                        cell18.CellValue = new CellValue((element.Attribute("noIdentificacion") != null) ? element.Attribute("noIdentificacion").Value : "");
+                        cell18.CellValue = new CellValue(GetString(element.Attribute("NoIdentificacion")));
                         cell18.DataType = CellValues.String;
                         Cell cell19 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
-                        cell19.CellValue = new CellValue((element.Attribute("descripcion") != null) ? element.Attribute("descripcion").Value : "");
+                        cell19.CellValue = new CellValue(GetString(element.Attribute("Descripcion")));
                         cell19.DataType = CellValues.String;
                         Cell cell20 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
-                        cell20.CellValue = new CellValue((element.Attribute("valorUnitario") != null) ? element.Attribute("valorUnitario").Value : "");
+                        cell20.CellValue = new CellValue(GetString(element.Attribute("ValorUnitario")));
                         cell20.DataType = CellValues.Number;
                         Cell cell21 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
-                        cell21.CellValue = new CellValue((element.Attribute("importe") != null) ? element.Attribute("importe").Value : "");
+                        cell21.CellValue = new CellValue(GetString(element.Attribute("importe")));
                         cell21.DataType = CellValues.Number;
                     }
                 }
@@ -266,9 +265,7 @@ namespace Contabilidad.Controllers
                             rowIndex++;
                             Cell cell26 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
 
-                            var impuesto = element2.Attribute("impuesto") != null
-                                ? element2.Attribute("impuesto").Value
-                                : element2.Attribute("Impuesto").Value;
+                            var impuesto = GetString(element2.Attribute("Impuesto"));
 
                             cell26.CellValue = new CellValue(impuesto);
                             cell26.DataType = CellValues.String;
@@ -282,9 +279,7 @@ namespace Contabilidad.Controllers
                             cell27.DataType = CellValues.Number;
                             Cell cell28 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
 
-                            var importe = element2.Attribute("importe") != null
-                                ? element2.Attribute("importe").Value
-                                : element2.Attribute("Importe").Value;
+                            var importe = GetString(element2.Attribute("Importe"));
 
                             cell28.CellValue = new CellValue(importe);
                             cell28.DataType = CellValues.Number;
@@ -314,13 +309,13 @@ namespace Contabilidad.Controllers
                         {
                             rowIndex++;
                             Cell cell33 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
-                            cell33.CellValue = new CellValue(element3.Attribute("impuesto").Value);
+                            cell33.CellValue = new CellValue(GetString(element3.Attribute("Impuesto")));
                             cell33.DataType = CellValues.String;
                             Cell cell34 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
-                            cell34.CellValue = new CellValue((element3.Attribute("tasa") != null) ? element3.Attribute("tasa").Value : "");
+                            cell34.CellValue = new CellValue(GetString(element3.Attribute("Tasa")));
                             cell34.DataType = CellValues.Number;
                             Cell cell35 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
-                            cell35.CellValue = new CellValue(element3.Attribute("importe").Value);
+                            cell35.CellValue = new CellValue(GetString(element3.Attribute("Importe")));
                             cell35.DataType = CellValues.Number;
                         }
                     }
@@ -350,13 +345,13 @@ namespace Contabilidad.Controllers
                     foreach (XElement element4 in document2.Root.Element((XName)(namespace2 + "Complemento")).Element((XName)(namespace4 + "ImpuestosLocales")).Descendants()){
                         rowIndex++;
                         Cell cell39 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
-                        cell39.CellValue = new CellValue(element4.Attribute("Importe").Value);
+                        cell39.CellValue = new CellValue(GetString(element4.Attribute("Importe")));
                         cell39.DataType = CellValues.Number;
                         Cell cell40 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
-                        cell40.CellValue = new CellValue(element4.Attribute("TasadeTraslado").Value);
+                        cell40.CellValue = new CellValue(GetString(element4.Attribute("TasadeTraslado")));
                         cell40.DataType = CellValues.Number;
                         Cell cell41 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
-                        cell41.CellValue = new CellValue(element4.Attribute("ImpLocTrasladado").Value);
+                        cell41.CellValue = new CellValue(GetString(element4.Attribute("ImpLocTrasladado")));
                         cell41.DataType = CellValues.String;
                     }
 
@@ -379,8 +374,36 @@ namespace Contabilidad.Controllers
             FileStreamResult result1 = new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             {
                 FileDownloadName = "factura-"+ DateTime.Now.Ticks +".xlsx"
-            };
+            }; 
             return result1;
+        }
+
+        bool IsAttributeNull(XAttribute xAttribute)
+        {
+            bool result;
+
+            try
+            {
+                result = xAttribute != null ? false : true;
+            }
+            catch (Exception)
+            {
+                result = true;
+            }
+            return result;
+        }
+
+        string GetString(XAttribute xAttribute)
+        {
+            string result = string.Empty;
+
+            try
+            {
+                result = xAttribute != null ? xAttribute.Value : xAttribute.Parent.Attribute(xAttribute.Name.LocalName.ToLowerInvariant()).Value;
+            }
+            catch (Exception) { }
+
+            return result;
         }
         
         private static Cell InsertCellInWorksheet(string columnName, uint rowIndex, SheetData sheetData, Worksheet worksheet)
