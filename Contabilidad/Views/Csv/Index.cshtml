@@ -1,0 +1,10 @@
+﻿<div class="jumbotron">
+	@using (Html.BeginForm("Exportcsv", "Csv", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		@Html.AntiForgeryToken()
+		@Html.ValidationSummary(true)
+
+		<input class="form-control" type="file" name="files" accept="text/plain" multiple>
+		<button type="submit" class="btn btn-primary">Enviar</button>
+	}
+</div>

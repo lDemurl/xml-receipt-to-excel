@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml;
+﻿using Contabilidad.Helpers;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
@@ -56,7 +57,7 @@ namespace Contabilidad.Controllers
             for (int i = 0; i < strArray3.Length; i++)
             {
                 string text1 = strArray3[i];
-                Cell cell1 = InsertCellInWorksheet(strArray[index], 1, sheetData, worksheet);
+                Cell cell1 = XMLHelper.InsertCellInWorksheet(strArray[index], 1, sheetData, worksheet);
                 cell1.CellValue = new CellValue(strArray2[index]);
                 cell1.DataType = CellValues.String;
                 index++;
@@ -76,27 +77,27 @@ namespace Contabilidad.Controllers
                  
                 DateTime time = DateTime.Parse(GetString(document2.Root.Attribute("Fecha")));
 
-                Cell cell2 = InsertCellInWorksheet("A", rowIndex, sheetData, worksheet);
+                Cell cell2 = XMLHelper.InsertCellInWorksheet("A", rowIndex, sheetData, worksheet);
                 cell2.CellValue = new CellValue($"{time:G}");
                 cell2.DataType = CellValues.String;
 
-                Cell cell3 = InsertCellInWorksheet("B", rowIndex, sheetData, worksheet);
+                Cell cell3 = XMLHelper.InsertCellInWorksheet("B", rowIndex, sheetData, worksheet);
                 cell3.CellValue = new CellValue(GetString(document2.Root.Attribute("Serie")));
                 cell3.DataType = CellValues.String;
-                Cell cell4 = InsertCellInWorksheet("C", rowIndex, sheetData, worksheet);
+                Cell cell4 = XMLHelper.InsertCellInWorksheet("C", rowIndex, sheetData, worksheet);
                 cell4.CellValue = new CellValue(GetString(document2.Root.Attribute("Folio")));
                 cell4.DataType = CellValues.Number;
-                Cell cell5 = InsertCellInWorksheet("D", rowIndex, sheetData, worksheet);
+                Cell cell5 = XMLHelper.InsertCellInWorksheet("D", rowIndex, sheetData, worksheet);
                 cell5.CellValue = new CellValue(document2.Root.Element((XName)(namespace2 + "Complemento")).Element((XName)(namespace3 + "TimbreFiscalDigital")).Attribute("UUID").Value);
                 cell5.DataType = CellValues.String;
-                Cell cell6 = InsertCellInWorksheet("E", rowIndex, sheetData, worksheet);
+                Cell cell6 = XMLHelper.InsertCellInWorksheet("E", rowIndex, sheetData, worksheet);
 
                 var rfc_emisor = GetString(document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("Rfc"));
 
                 cell6.CellValue = new CellValue(rfc_emisor);
                 cell6.DataType = CellValues.String;
 
-                Cell CellDomicilioEmisor = InsertCellInWorksheet("F", rowIndex, sheetData, worksheet);
+                Cell CellDomicilioEmisor = XMLHelper.InsertCellInWorksheet("F", rowIndex, sheetData, worksheet);
 
                 var DomicilioEmisor = string.Empty;
                 var currentDomicilioEmisor = (document2.Root.Element((XName)(namespace2 + "Emisor")).Element((XName)(namespace2 + "DomicilioFiscal")));
@@ -124,10 +125,10 @@ namespace Contabilidad.Controllers
                 CellDomicilioEmisor.CellValue = new CellValue(DomicilioEmisor);
                 CellDomicilioEmisor.DataType = CellValues.String;
 
-                Cell cell7 = InsertCellInWorksheet("G", rowIndex, sheetData, worksheet);
+                Cell cell7 = XMLHelper.InsertCellInWorksheet("G", rowIndex, sheetData, worksheet);
                 cell7.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Emisor")).Attribute("Nombre")));
                 cell7.DataType = CellValues.String;
-                Cell cell8 = InsertCellInWorksheet("H", rowIndex, sheetData, worksheet);
+                Cell cell8 = XMLHelper.InsertCellInWorksheet("H", rowIndex, sheetData, worksheet);
 
                 var rfc_receptor = GetString(document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("Rfc"));
 
@@ -157,66 +158,66 @@ namespace Contabilidad.Controllers
 
                 }
 
-                Cell CellDomicilioReceptor = InsertCellInWorksheet("I", rowIndex, sheetData, worksheet);
+                Cell CellDomicilioReceptor = XMLHelper.InsertCellInWorksheet("I", rowIndex, sheetData, worksheet);
                 CellDomicilioReceptor.CellValue = new CellValue(DomicilioReceptor);
                 CellDomicilioReceptor.DataType = CellValues.String;
 
                 if ((document2.Root.Element((XName)(namespace2 + "Impuestos")) != null))
                 {
                     //rowIndex++;
-                    Cell cell36 = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
+                    Cell cell36 = XMLHelper.InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
                     cell36.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("TotalImpuestosRetenidos")));
                     cell36.DataType = CellValues.Number;
-                    Cell cell37 = InsertCellInWorksheet("T", rowIndex, sheetData, worksheet);
+                    Cell cell37 = XMLHelper.InsertCellInWorksheet("T", rowIndex, sheetData, worksheet);
                     cell37.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Impuestos")).Attribute("TotalImpuestosTrasladados")));
                     cell37.DataType = CellValues.Number;
-                    Cell cell38 = InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
+                    Cell cell38 = XMLHelper.InsertCellInWorksheet("S", rowIndex, sheetData, worksheet);
                     cell38.CellValue = new CellValue();
                     cell38.DataType = CellValues.Number;
                 }
 
                 var total = GetString(document2.Root.Attribute("Total"));
 
-                Cell totalcell = InsertCellInWorksheet("U", rowIndex, sheetData, worksheet);
+                Cell totalcell = XMLHelper.InsertCellInWorksheet("U", rowIndex, sheetData, worksheet);
                 totalcell.CellValue = new CellValue(total);
                 totalcell.DataType = CellValues.Number;
 
 
-                Cell cell9 = InsertCellInWorksheet("J", rowIndex, sheetData, worksheet);
+                Cell cell9 = XMLHelper.InsertCellInWorksheet("J", rowIndex, sheetData, worksheet);
                 cell9.CellValue = new CellValue(GetString(document2.Root.Element((XName)(namespace2 + "Receptor")).Attribute("Nombre")));
                 cell9.DataType = CellValues.String;
-                Cell cell10 = InsertCellInWorksheet("K", rowIndex, sheetData, worksheet);
+                Cell cell10 = XMLHelper.InsertCellInWorksheet("K", rowIndex, sheetData, worksheet);
                 cell10.CellValue = new CellValue("Cantidad");
                 cell10.DataType = CellValues.String;
                 cell10.StyleIndex = 1;
-                Cell cell11 = InsertCellInWorksheet("L", rowIndex, sheetData, worksheet);
+                Cell cell11 = XMLHelper.InsertCellInWorksheet("L", rowIndex, sheetData, worksheet);
                 cell11.CellValue = new CellValue("Unidad");
                 cell11.DataType = CellValues.String;
                 cell11.StyleIndex = 1;
 
-                Cell ClaveProdServHeader = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
+                Cell ClaveProdServHeader = XMLHelper.InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
                 ClaveProdServHeader.CellValue = new CellValue("ClaveProdServ");
                 ClaveProdServHeader.DataType = CellValues.String;
                 ClaveProdServHeader.StyleIndex = 1;
 
-                Cell ClaveUnidadHeader = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                Cell ClaveUnidadHeader = XMLHelper.InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
                 ClaveUnidadHeader.CellValue = new CellValue("ClaveUnidad");
                 ClaveUnidadHeader.DataType = CellValues.String;
                 ClaveUnidadHeader.StyleIndex = 1;
 
-                Cell cell12 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                Cell cell12 = XMLHelper.InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
                 cell12.CellValue = new CellValue("No. Identificaci\x00f3n");
                 cell12.DataType = CellValues.String;
                 cell12.StyleIndex = 1;
-                Cell cell13 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                Cell cell13 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
                 cell13.CellValue = new CellValue("Descripci\x00f3n");
                 cell13.DataType = CellValues.String;
                 cell13.StyleIndex = 1;
-                Cell cell14 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                Cell cell14 = XMLHelper.InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
                 cell14.CellValue = new CellValue("Valor Unitario");
                 cell14.DataType = CellValues.String;
                 cell14.StyleIndex = 1;
-                Cell cell15 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                Cell cell15 = XMLHelper.InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
                 cell15.CellValue = new CellValue("Importe");
                 cell15.DataType = CellValues.String;
                 cell15.StyleIndex = 1;
@@ -227,31 +228,31 @@ namespace Contabilidad.Controllers
                     if (!IsAttributeNull(element.Attribute("Cantidad")))
                     {
                         rowIndex++;
-                        Cell cell16 = InsertCellInWorksheet("K", rowIndex, sheetData, worksheet);
+                        Cell cell16 = XMLHelper.InsertCellInWorksheet("K", rowIndex, sheetData, worksheet);
                         cell16.CellValue = new CellValue(GetString(element.Attribute("Cantidad")));
                         cell16.DataType = CellValues.Number;
-                        Cell cell17 = InsertCellInWorksheet("L", rowIndex, sheetData, worksheet);
+                        Cell cell17 = XMLHelper.InsertCellInWorksheet("L", rowIndex, sheetData, worksheet);
                         cell17.CellValue = new CellValue(GetString(element.Attribute("Unidad")));
                         cell17.DataType = CellValues.String;
 
-                        Cell ClaveProdServ = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
+                        Cell ClaveProdServ = XMLHelper.InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
                         ClaveProdServ.CellValue = new CellValue(GetString(element.Attribute("ClaveProdServ")));
                         ClaveProdServ.DataType = CellValues.String;
 
-                        Cell ClaveUnidad = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                        Cell ClaveUnidad = XMLHelper.InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
                         ClaveUnidad.CellValue = new CellValue(GetString(element.Attribute("ClaveUnidad")));
                         ClaveUnidad.DataType = CellValues.String;
 
-                        Cell cell18 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                        Cell cell18 = XMLHelper.InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
                         cell18.CellValue = new CellValue(GetString(element.Attribute("NoIdentificacion")));
                         cell18.DataType = CellValues.String;
-                        Cell cell19 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                        Cell cell19 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
                         cell19.CellValue = new CellValue(GetString(element.Attribute("Descripcion")));
                         cell19.DataType = CellValues.String;
-                        Cell cell20 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                        Cell cell20 = XMLHelper.InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
                         cell20.CellValue = new CellValue(GetString(element.Attribute("ValorUnitario")));
                         cell20.DataType = CellValues.Number;
-                        Cell cell21 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                        Cell cell21 = XMLHelper.InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
                         cell21.CellValue = new CellValue(GetString(element.Attribute("Importe")));
                         cell21.DataType = CellValues.Number;
                     }
@@ -264,19 +265,19 @@ namespace Contabilidad.Controllers
                     {
 
                         rowIndex++;
-                        Cell cell22 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                        Cell cell22 = XMLHelper.InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
                         cell22.CellValue = new CellValue("Impuestos Trasladados");
                         cell22.DataType = CellValues.String;
                         cell22.StyleIndex = 1;
-                        Cell cell23 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                        Cell cell23 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
                         cell23.CellValue = new CellValue("Impuesto");
                         cell23.DataType = CellValues.String;
                         cell23.StyleIndex = 1;
-                        Cell cell24 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                        Cell cell24 = XMLHelper.InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
                         cell24.CellValue = new CellValue("Tasa");
                         cell24.DataType = CellValues.String;
                         cell24.StyleIndex = 1;
-                        Cell cell25 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                        Cell cell25 = XMLHelper.InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
                         cell25.CellValue = new CellValue("Importe");
                         cell25.DataType = CellValues.String;
                         cell25.StyleIndex = 1;
@@ -284,13 +285,13 @@ namespace Contabilidad.Controllers
                         foreach (XElement element2 in document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Traslados")).Descendants())
                         {
                             rowIndex++;
-                            Cell cell26 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                            Cell cell26 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
 
                             var impuesto = GetString(element2.Attribute("Impuesto"));
 
                             cell26.CellValue = new CellValue(impuesto);
                             cell26.DataType = CellValues.String;
-                            Cell cell27 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                            Cell cell27 = XMLHelper.InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
 
                             var tasa = GetString(element2.Attribute("Tasa"));
 
@@ -299,7 +300,7 @@ namespace Contabilidad.Controllers
 
                             cell27.CellValue = new CellValue(tasa);
                             cell27.DataType = CellValues.Number;
-                            Cell cell28 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                            Cell cell28 = XMLHelper.InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
 
                             var importe = GetString(element2.Attribute("Importe"));
 
@@ -311,29 +312,29 @@ namespace Contabilidad.Controllers
                     if (document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Retenciones")) != null)
                     {
                         rowIndex++;
-                        Cell cell29 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                        Cell cell29 = XMLHelper.InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
                         cell29.CellValue = new CellValue("Impuestos Retenciones");
                         cell29.DataType = CellValues.String;
                         cell29.StyleIndex = 1;
-                        Cell cell30 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                        Cell cell30 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
                         cell30.CellValue = new CellValue("Impuesto");
                         cell30.DataType = CellValues.String;
                         cell30.StyleIndex = 1;
-                        Cell cell31 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                        Cell cell31 = XMLHelper.InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
                         cell31.CellValue = new CellValue("Tasa");
                         cell31.DataType = CellValues.String;
                         cell31.StyleIndex = 1;
-                        Cell cell32 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                        Cell cell32 = XMLHelper.InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
                         cell32.CellValue = new CellValue("Importe");
                         cell32.DataType = CellValues.String;
                         cell32.StyleIndex = 1;
                         foreach (XElement element3 in document2.Root.Element((XName)(namespace2 + "Impuestos")).Element((XName)(namespace2 + "Retenciones")).Descendants())
                         {
                             rowIndex++;
-                            Cell cell33 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                            Cell cell33 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
                             cell33.CellValue = new CellValue(GetString(element3.Attribute("Impuesto")));
                             cell33.DataType = CellValues.String;
-                            Cell cell34 = InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
+                            Cell cell34 = XMLHelper.InsertCellInWorksheet("Q", rowIndex, sheetData, worksheet);
 
                             var tasa = GetString(element3.Attribute("Tasa"));
 
@@ -342,7 +343,7 @@ namespace Contabilidad.Controllers
 
                             cell34.CellValue = new CellValue(tasa);
                             cell34.DataType = CellValues.Number;
-                            Cell cell35 = InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
+                            Cell cell35 = XMLHelper.InsertCellInWorksheet("R", rowIndex, sheetData, worksheet);
                             cell35.CellValue = new CellValue(GetString(element3.Attribute("Importe")));
                             cell35.DataType = CellValues.Number;
                         }
@@ -353,32 +354,32 @@ namespace Contabilidad.Controllers
                 {
 
                     rowIndex++;
-                    Cell cell29 = InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
+                    Cell cell29 = XMLHelper.InsertCellInWorksheet("M", rowIndex, sheetData, worksheet);
                     cell29.CellValue = new CellValue("Impuestos Locales");
                     cell29.DataType = CellValues.String;
                     cell29.StyleIndex = 1;
-                    Cell cell30 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                    Cell cell30 = XMLHelper.InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
                     cell30.CellValue = new CellValue("Importe");
                     cell30.DataType = CellValues.String;
                     cell30.StyleIndex = 1;
-                    Cell cell31 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                    Cell cell31 = XMLHelper.InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
                     cell31.CellValue = new CellValue("Tasa de Traslado");
                     cell31.DataType = CellValues.String;
                     cell31.StyleIndex = 1;
-                    Cell cell32 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                    Cell cell32 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
                     cell32.CellValue = new CellValue("Importe Local Trasladado");
                     cell32.DataType = CellValues.String;
                     cell32.StyleIndex = 1;
 
                     foreach (XElement element4 in document2.Root.Element((XName)(namespace2 + "Complemento")).Element((XName)(namespace4 + "ImpuestosLocales")).Descendants()){
                         rowIndex++;
-                        Cell cell39 = InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
+                        Cell cell39 = XMLHelper.InsertCellInWorksheet("N", rowIndex, sheetData, worksheet);
                         cell39.CellValue = new CellValue(GetString(element4.Attribute("Importe")));
                         cell39.DataType = CellValues.Number;
-                        Cell cell40 = InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
+                        Cell cell40 = XMLHelper.InsertCellInWorksheet("O", rowIndex, sheetData, worksheet);
                         cell40.CellValue = new CellValue(GetString(element4.Attribute("TasadeTraslado")));
                         cell40.DataType = CellValues.Number;
-                        Cell cell41 = InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
+                        Cell cell41 = XMLHelper.InsertCellInWorksheet("P", rowIndex, sheetData, worksheet);
                         cell41.CellValue = new CellValue(GetString(element4.Attribute("ImpLocTrasladado")));
                         cell41.DataType = CellValues.String;
                     }
@@ -432,54 +433,7 @@ namespace Contabilidad.Controllers
             catch (Exception) { }
 
             return result;
-        }
-        
-        private static Cell InsertCellInWorksheet(string columnName, uint rowIndex, SheetData sheetData, Worksheet worksheet)
-        {
-            Row row;
-            string cellReference = columnName + rowIndex;
-            if ((from r in sheetData.Elements<Row>()
-                 where r.RowIndex == rowIndex
-                 select r).Count<Row>() != 0)
-            {
-                row = (from r in sheetData.Elements<Row>()
-                       where r.RowIndex == rowIndex
-                       select r).First<Row>();
-            }
-            else
-            {
-                row = new Row
-                {
-                    RowIndex = rowIndex
-                };
-                OpenXmlElement[] newChildren = new OpenXmlElement[] { row };
-                sheetData.Append(newChildren);
-            }
-            if ((from c in row.Elements<Cell>()
-                 where c.CellReference.Value == (columnName + rowIndex)
-                 select c).Count<Cell>() > 0)
-            {
-                return (from c in row.Elements<Cell>()
-                        where c.CellReference.Value == cellReference
-                        select c).First<Cell>();
-            }
-            Cell refChild = null;
-            foreach (Cell cell3 in row.Elements<Cell>())
-            {
-                if (string.Compare(cell3.CellReference.Value, cellReference, true) > 0)
-                {
-                    refChild = cell3;
-                    break;
-                }
-            }
-            Cell newChild = new Cell
-            {
-                CellReference = cellReference
-            };
-            row.InsertBefore<Cell>(newChild, refChild);
-            worksheet.Save();
-            return newChild;
-        }
+        }               
 
         private Stylesheet GenerateStyleSheet()
         {
